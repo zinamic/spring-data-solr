@@ -25,7 +25,6 @@
 		<solr>8.5.2</solr>
 		<springdata.commons>3.0.0</springdata.commons>
 		<java-module-name>spring.data.solr</java-module-name>
-		<maven.deploy.skip>false</maven.deploy.skip>
 	</properties>
 
 	<distributionManagement>
@@ -190,7 +189,8 @@
 			<groupId>org.jfrog.buildinfo</groupId>
 			<artifactId>artifactory-maven-plugin</artifactId>
 		    <configuration>
-		        <skip>true</skip>
+				<publishArtifacts>false</publishArtifacts>
+  				<publishBuildInfo>false</publishBuildInfo>
 		    </configuration>
 		  </plugin>
 
