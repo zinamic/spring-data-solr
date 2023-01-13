@@ -6,6 +6,7 @@
 	<groupId>com.zinamic</groupId>
 	<artifactId>spring-data-solr</artifactId>
 	<version>4.4.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 	<name>Spring Data Solr (zinamic fork)</name>
 	<description>Zinamic fork of Spring Data module providing support for Apache Solr repositories.</description>
