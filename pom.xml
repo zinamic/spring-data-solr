@@ -25,6 +25,7 @@
 		<solr>8.5.2</solr>
 		<springdata.commons>3.0.0</springdata.commons>
 		<java-module-name>spring.data.solr</java-module-name>
+		<maven.deploy.skip>true</maven.deploy.skip>
 	</properties>
 
 	<distributionManagement>
@@ -39,24 +40,6 @@
 	        <url>https://artifactory.zinamic.tools/artifactory/libs-snapshot-local</url>
 	    </snapshotRepository>
 	</distributionManagement>
-
-	<developers>
-		<developer>
-			<id>christophstrobl</id>
-			<name>Christoph Strobl</name>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<id>ogierke</id>
-			<name>Oliver Gierke</name>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<id>mpollack</id>
-			<name>Mark Pollack</name>
-			<timezone>-5</timezone>
-		</developer>
-	</developers>
 
 	<dependencyManagement>
 		<dependencies>
