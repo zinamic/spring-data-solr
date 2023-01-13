@@ -25,6 +25,7 @@
 		<solr>8.5.2</solr>
 		<springdata.commons>3.0.0</springdata.commons>
 		<java-module-name>spring.data.solr</java-module-name>
+		<maven.deploy.skip>false</maven.deploy.skip>
 	</properties>
 
 	<distributionManagement>
