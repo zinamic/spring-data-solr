@@ -11,19 +11,19 @@
 	<name>Spring Data Solr (zinamic fork)</name>
 	<description>Zinamic fork of Spring Data module providing support for Apache Solr repositories.</description>
 
-	<parent>
-		<groupId>org.springframework.data.build</groupId>
-		<artifactId>spring-data-parent</artifactId>
-		<version>3.0.0</version>
-	</parent>
-
 	<properties>
 		<java.version>17</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+   		<maven.compiler.target>17</maven.compiler.target>		
 		<commons.collections>3.2.1</commons.collections>
 		<commons.lang>3.1</commons.lang>
 		<httpcomponents>4.3.1</httpcomponents>
 		<solr>8.5.2</solr>
-		<springdata.commons>3.0.0</springdata.commons>
+		<cdi>4.0.1</cdi>
+		<jackson>2.14.0</jackson>
+		<commons-io>2.5</commons-io>
+		<spring.version>6.0.0</spring.version>
+		<spring-data.version>3.0.0</spring-data.version>
 		<java-module-name>spring.data.solr</java-module-name>
 	</properties>
 
@@ -55,6 +55,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -65,13 +66,14 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 
 		<!-- SPRING DATA -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-commons</artifactId>
-			<version>${springdata.commons}</version>
+			<version>${spring-data.version}</version>
 		</dependency>
 
 		<!-- APACHE -->
@@ -163,6 +165,7 @@
 		    <artifactId>jakarta.enterprise.cdi-api</artifactId>
 			<scope>provided</scope>
 			<optional>true</optional>
+			<version>${cdi}</version>
 		</dependency>
 		
 		<dependency>
@@ -179,22 +182,8 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
+			<version>${jackson}</version>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-		
-		  <plugin>
-			<groupId>org.jfrog.buildinfo</groupId>
-			<artifactId>artifactory-maven-plugin</artifactId>
-		    <configuration>
-				<publishArtifacts>false</publishArtifacts>
-  				<publishBuildInfo>false</publishBuildInfo>
-		    </configuration>
-		  </plugin>
-
-		</plugins>
-	</build>
   
 </project>
