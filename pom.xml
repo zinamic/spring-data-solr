@@ -27,6 +27,19 @@
 		<java-module-name>spring.data.solr</java-module-name>
 	</properties>
 
+	<distributionManagement>
+	    <repository>
+	        <id>central</id>
+	        <name>artifactory-releases</name>
+	        <url>https://artifactory.zinamic.tools/artifactory/libs-release-local</url>
+	    </repository>	
+	    <snapshotRepository>
+	        <id>snapshots</id>
+	        <name>artifactory-snapshots</name>
+	        <url>https://artifactory.zinamic.tools/artifactory/libs-snapshot-local</url>
+	    </snapshotRepository>
+	</distributionManagement>
+
 	<developers>
 		<developer>
 			<id>christophstrobl</id>
