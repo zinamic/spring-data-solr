@@ -149,6 +149,11 @@ public class SolrPageRequest implements Pageable {
 	}
 
 	@Override
+	public Pageable withPage(int pageNumber) {
+		return new SolrPageRequest(pageNumber, getPageSize(), getSort());
+	}
+	
+	@Override
 	public int hashCode() {
 		int result = sort.hashCode();
 		result = 31 * result + page;

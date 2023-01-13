@@ -207,6 +207,20 @@ public class SimpleSolrRepository<T, ID extends Serializable> implements SolrCru
 	}
 
 	@Override
+	public void deleteAllById(Iterable<? extends ID> ids) {
+		Assert.notNull(ids, "Cannot delete 'null' list");
+
+		ArrayList<String> idsToDelete = new ArrayList<>();
+		for (ID id : ids) {
+			idsToDelete.add(id.toString());
+		}
+
+		registerTransactionSynchronisationIfSynchronisationActive();
+		this.solrOperations.deleteByIds(solrCollectionName, idsToDelete);
+		commitIfTransactionSynchronisationIsInactive();
+	}
+	
+	@Override
 	public void deleteAll() {
 		registerTransactionSynchronisationIfSynchronisationActive();
 		this.solrOperations.delete(solrCollectionName,

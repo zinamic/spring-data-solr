@@ -20,14 +20,14 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
-import javax.activation.MimeType;
-import javax.activation.MimeTypeParseException;
-
 import org.apache.solr.client.solrj.ResponseParser;
 import org.apache.solr.common.util.NamedList;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StreamUtils;
+
+import jakarta.activation.MimeType;
+import jakarta.activation.MimeTypeParseException;
 
 /**
  * @author Christoph Strobl
