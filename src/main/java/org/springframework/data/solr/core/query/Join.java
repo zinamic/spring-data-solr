@@ -29,13 +29,14 @@ public class Join {
 	private @Nullable Field from;
 	private @Nullable Field to;
 	private @Nullable String fromIndex;
+	private @Nullable String method;
 
 	private Join() {
 		// hide default constructor
 	}
 
 	public Join(Field from, Field to) {
-		this(from, to, null);
+		this(from, to, null, null);
 	}
 
 	/**
@@ -46,10 +47,11 @@ public class Join {
 	 * @param fromIndex
 	 * @since 2.0
 	 */
-	public Join(Field from, Field to, @Nullable String fromIndex) {
+	public Join(Field from, Field to, @Nullable String fromIndex, @Nullable String method) {
 		this.from = from;
 		this.to = to;
 		this.fromIndex = fromIndex;
+		this.method = method;
 	}
 
 	/**
@@ -93,6 +95,15 @@ public class Join {
 		return fromIndex;
 	}
 
+	/**
+	 * @return can be {@literal null}.
+	 * @since 2.0
+	 */
+	@Nullable
+	public String getMethod() {
+		return method;
+	}
+
 	public static class Builder {
 
 		private Join join;
@@ -134,6 +145,16 @@ public class Join {
 		 */
 		public Builder fromIndex(String fromIndex) {
 			join.fromIndex = fromIndex;
+			return this;
+		}
+
+		/**
+		 * @param method
+		 * @return
+		 * @since 2.0
+		 */
+		public Builder method(String method) {
+			join.method = method;
 			return this;
 		}
 
