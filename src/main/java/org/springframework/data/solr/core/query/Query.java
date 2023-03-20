@@ -102,6 +102,15 @@ public interface Query extends SolrDataQuery {
 	<T extends Query> T setRows(Integer rows);
 
 	/**
+	 * Set the cursor to use.
+	 *
+	 * @param rows
+	 * @return
+	 * @since 1.3
+	 */
+	<T extends Query> T setCursor(String cursor);
+
+	/**
 	 * add the given field to those used for grouping result Corresponds to '' in solr
 	 *
 	 * @param field
@@ -157,6 +166,9 @@ public interface Query extends SolrDataQuery {
 	 */
 	@Nullable
 	Integer getRows();
+
+	@Nullable
+	String getCursor();
 
 	/**
 	 * Get group by fields if defined

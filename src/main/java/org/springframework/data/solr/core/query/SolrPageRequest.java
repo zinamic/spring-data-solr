@@ -15,6 +15,8 @@
  */
 package org.springframework.data.solr.core.query;
 
+import java.util.Objects;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -31,6 +33,7 @@ public class SolrPageRequest implements Pageable {
 	private @Nullable Sort sort;
 	private int page;
 	private int size;
+	private @Nullable String cursor;
 
 	/**
 	 * Creates a new {@link SolrPageRequest}. Pages are zero indexed.
@@ -65,6 +68,13 @@ public class SolrPageRequest implements Pageable {
 		this.page = page;
 		this.size = size;
 		this.sort = sort;
+	}
+
+	public SolrPageRequest(int page, int size, String cursor, @Nullable Sort sort) {
+		this.page = page;
+		this.size = size;
+		this.sort = sort;
+		this.cursor = cursor;
 	}
 
 	/*
@@ -155,37 +165,20 @@ public class SolrPageRequest implements Pageable {
 	
 	@Override
 	public int hashCode() {
-		int result = sort.hashCode();
-		result = 31 * result + page;
-		result = 31 * result + (size ^ size >>> 32);
-		return result;
+		return Objects.hash(sort, page, size, cursor);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null || !(obj instanceof Pageable)) {
+		if (obj == null)
 			return false;
-		}
-
-		Pageable other = (Pageable) obj;
-		if (page != other.getPageNumber()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
-		if (size != other.getPageSize()) {
-			return false;
-		}
-		if (sort == null) {
-			if (other.getSort() != null) {
-				return false;
-			}
-		} else if (!sort.equals(other.getSort())) {
-			return false;
-		}
-		return true;
+		SolrPageRequest other = (SolrPageRequest) obj;
+		return Objects.equals(sort, other.sort) && page == other.page && size == other.size
+				&& Objects.equals(cursor, other.cursor);
 	}
 
 	@Override

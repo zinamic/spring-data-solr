@@ -25,6 +25,6 @@ import org.springframework.data.domain.Page;
  * @author Francisco Spaeth
  * @author David Webb
  */
-public interface FacetPage<T> extends FacetQueryResult<T>, Page<T> {
+public interface FacetPage<T> extends FacetQueryResult<T>, Page<T>, WithCursor {
 
 }

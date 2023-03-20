@@ -58,14 +58,16 @@ public class SolrResultPage<T> extends PageImpl<T> implements FacetPage<T>, High
 	private Map<Object, GroupResult<T>> groupResults = Collections.emptyMap();
 	private Map<String, FieldStatsResult> fieldStatsResults = Collections.emptyMap();
 	private Map<String, List<Alternative>> suggestions = new LinkedHashMap<>();
+	private @Nullable String cursor;
 
 	public SolrResultPage(List<T> content) {
 		super(content);
 	}
 
-	public SolrResultPage(List<T> content, Pageable pageable, long total, @Nullable Float maxScore) {
+	public SolrResultPage(List<T> content, Pageable pageable, long total, @Nullable Float maxScore, @Nullable String cursor) {
 		super(content, pageable, total);
 		this.maxScore = maxScore;
+		this.cursor = cursor;
 	}
 
 	private Page<FacetFieldEntry> getResultPage(String fieldname, Map<PageKey, Page<FacetFieldEntry>> resultPages) {
@@ -345,4 +347,13 @@ public class SolrResultPage<T> extends PageImpl<T> implements FacetPage<T>, High
 				: Collections.<Alternative> emptyList();
 	}
 
+	@Override
+	public String getCursor() {
+		return cursor;
+	}
+
+	@Override
+	public void setCursor(String cursor) {
+		this.cursor = cursor;
+	}
 }

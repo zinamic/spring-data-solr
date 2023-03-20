@@ -165,6 +165,11 @@ public abstract class AbstractQueryDecorator implements Query {
 	}
 
 	@Override
+	public <T extends Query> T setCursor(String cursor) {
+		return this.query.setCursor(cursor);
+	}
+
+	@Override
 	public Long getOffset() {
 		return this.query.getOffset();
 	}
@@ -172,6 +177,11 @@ public abstract class AbstractQueryDecorator implements Query {
 	@Override
 	public Integer getRows() {
 		return this.query.getRows();
+	}
+
+	@Override
+	public String getCursor() {
+		return this.query.getCursor();
 	}
 
 	@Override

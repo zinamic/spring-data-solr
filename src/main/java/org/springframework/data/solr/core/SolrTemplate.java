@@ -68,8 +68,18 @@ import org.springframework.data.solr.core.query.HighlightQuery;
 import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.SolrDataQuery;
 import org.springframework.data.solr.core.query.TermsQuery;
-import org.springframework.data.solr.core.query.result.*;
+import org.springframework.data.solr.core.query.result.Cursor;
+import org.springframework.data.solr.core.query.result.DelegatingCursor;
+import org.springframework.data.solr.core.query.result.FacetAndHighlightPage;
+import org.springframework.data.solr.core.query.result.FacetPage;
+import org.springframework.data.solr.core.query.result.GroupPage;
+import org.springframework.data.solr.core.query.result.HighlightPage;
+import org.springframework.data.solr.core.query.result.ScoredPage;
+import org.springframework.data.solr.core.query.result.SolrResultPage;
 import org.springframework.data.solr.core.query.result.SpellcheckQueryResult.Alternative;
+import org.springframework.data.solr.core.query.result.StatsPage;
+import org.springframework.data.solr.core.query.result.TermsPage;
+import org.springframework.data.solr.core.query.result.TermsResultPage;
 import org.springframework.data.solr.core.schema.DefaultSchemaOperations;
 import org.springframework.data.solr.core.schema.SchemaOperations;
 import org.springframework.data.solr.core.schema.SolrPersistentEntitySchemaCreator;
@@ -441,7 +451,7 @@ public class SolrTemplate implements SolrOperations, InitializingBean, Applicati
 
 		Pageable pageRequest = query.getPageRequest();
 
-		SolrResultPage<T> page = new SolrResultPage<>(beans, pageRequest, numFound, maxScore);
+		SolrResultPage<T> page = new SolrResultPage<>(beans, pageRequest, numFound, maxScore, response.getNextCursorMark());
 
 		page.setFieldStatsResults(ResultHelper.convertFieldStatsInfoToFieldStatsResultMap(response.getFieldStatsInfo()));
 		page.setGroupResults(
