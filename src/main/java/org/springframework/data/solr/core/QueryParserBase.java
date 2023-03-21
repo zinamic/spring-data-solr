@@ -431,14 +431,14 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 	 */
 	protected void appendPagination(SolrQuery query, @Nullable Long offset, @Nullable Integer rows, @Nullable String cursor) {
 
-		if (offset != null && offset.intValue() >= 0) {
-			query.setStart(offset.intValue());
-		}
 		if (rows != null && rows >= 0) {
 			query.setRows(rows);
 		}
 		if (cursor != null) {
 			query.set(CursorMarkParams.CURSOR_MARK_PARAM, cursor);
+			query.setStart(0);
+		} else if (offset != null && offset.intValue() >= 0) {
+			query.setStart(offset.intValue());
 		}
 	}
 
