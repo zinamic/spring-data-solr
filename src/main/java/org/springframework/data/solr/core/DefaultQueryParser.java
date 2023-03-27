@@ -35,16 +35,29 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.mapping.context.MappingContext;
-import org.springframework.data.solr.core.query.*;
-import org.springframework.data.solr.core.query.Criteria.Predicate;
+import org.springframework.data.solr.core.query.Criteria;
+import org.springframework.data.solr.core.query.FacetOptions;
 import org.springframework.data.solr.core.query.FacetOptions.FacetParameter;
 import org.springframework.data.solr.core.query.FacetOptions.FieldWithDateRangeParameters;
 import org.springframework.data.solr.core.query.FacetOptions.FieldWithFacetParameters;
 import org.springframework.data.solr.core.query.FacetOptions.FieldWithNumericRangeParameters;
 import org.springframework.data.solr.core.query.FacetOptions.FieldWithRangeParameters;
+import org.springframework.data.solr.core.query.FacetQuery;
+import org.springframework.data.solr.core.query.Field;
+import org.springframework.data.solr.core.query.FilterQuery;
+import org.springframework.data.solr.core.query.Function;
 import org.springframework.data.solr.core.query.Function.Context.Target;
+import org.springframework.data.solr.core.query.GroupOptions;
+import org.springframework.data.solr.core.query.HighlightOptions;
 import org.springframework.data.solr.core.query.HighlightOptions.FieldWithHighlightParameters;
 import org.springframework.data.solr.core.query.HighlightOptions.HighlightParameter;
+import org.springframework.data.solr.core.query.HighlightQuery;
+import org.springframework.data.solr.core.query.PivotField;
+import org.springframework.data.solr.core.query.Query;
+import org.springframework.data.solr.core.query.QueryParameter;
+import org.springframework.data.solr.core.query.SolrDataQuery;
+import org.springframework.data.solr.core.query.SpellcheckOptions;
+import org.springframework.data.solr.core.query.StatsOptions;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -114,7 +127,7 @@ public class DefaultQueryParser extends QueryParserBase<SolrDataQuery> {
 
 	private void processQueryOptions(SolrQuery solrQuery, Query query, @Nullable Class<?> domainType) {
 
-		appendPagination(solrQuery, query.getOffset(), query.getRows());
+		appendPagination(solrQuery, query.getOffset(), query.getRows(), query.getCursor());
 		appendProjectionOnFields(solrQuery, query.getProjectionOnFields(), domainType);
 		appendFilterQuery(solrQuery, query.getFilterQueries(), domainType);
 		appendSort(solrQuery, query.getSort(), domainType);

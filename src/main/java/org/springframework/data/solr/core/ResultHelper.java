@@ -51,8 +51,25 @@ import org.springframework.data.solr.core.query.Field;
 import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.SimpleField;
 import org.springframework.data.solr.core.query.SimplePivotField;
-import org.springframework.data.solr.core.query.result.*;
+import org.springframework.data.solr.core.query.result.FacetFieldEntry;
+import org.springframework.data.solr.core.query.result.FacetPivotFieldEntry;
+import org.springframework.data.solr.core.query.result.FacetQueryEntry;
+import org.springframework.data.solr.core.query.result.FieldStatsResult;
+import org.springframework.data.solr.core.query.result.GroupEntry;
+import org.springframework.data.solr.core.query.result.GroupResult;
+import org.springframework.data.solr.core.query.result.HighlightEntry;
+import org.springframework.data.solr.core.query.result.SimpleFacetFieldEntry;
+import org.springframework.data.solr.core.query.result.SimpleFacetPivotEntry;
+import org.springframework.data.solr.core.query.result.SimpleFacetQueryEntry;
+import org.springframework.data.solr.core.query.result.SimpleFieldStatsResult;
+import org.springframework.data.solr.core.query.result.SimpleGroupEntry;
+import org.springframework.data.solr.core.query.result.SimpleGroupResult;
+import org.springframework.data.solr.core.query.result.SimpleStatsResult;
+import org.springframework.data.solr.core.query.result.SimpleTermsFieldEntry;
+import org.springframework.data.solr.core.query.result.SolrResultPage;
 import org.springframework.data.solr.core.query.result.SpellcheckQueryResult.Alternative;
+import org.springframework.data.solr.core.query.result.StatsResult;
+import org.springframework.data.solr.core.query.result.TermsFieldEntry;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -115,10 +132,10 @@ final class ResultHelper {
 							}
 						}
 						facetResult.put(field, new SolrResultPage<>(pageEntries, query.getFacetOptions().getPageable(),
-								facetField.getValueCount(), null));
+								facetField.getValueCount(), null, response.getNextCursorMark()));
 					} else {
 						facetResult.put(field, new SolrResultPage<>(Collections.<FacetFieldEntry> emptyList(),
-								query.getFacetOptions().getPageable(), 0, null));
+								query.getFacetOptions().getPageable(), 0, null, response.getNextCursorMark()));
 					}
 				}
 			}
@@ -202,7 +219,7 @@ final class ResultHelper {
 				total = 0;
 			}
 
-			facetResult.put(field, new SolrResultPage<>(entries, pageable, total, null));
+			facetResult.put(field, new SolrResultPage<>(entries, pageable, total, null, response.getNextCursorMark()));
 
 		}
 

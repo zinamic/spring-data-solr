@@ -40,6 +40,7 @@ public class SimpleQuery extends AbstractQuery implements Query, FilterQuery {
 
 	private @Nullable Long offset = null;
 	private @Nullable Integer rows = null;
+	private @Nullable String cursor = null;
 
 	private Sort sort = Sort.unsorted();
 
@@ -73,6 +74,10 @@ public class SimpleQuery extends AbstractQuery implements Query, FilterQuery {
 	 * @param pageable
 	 */
 	public SimpleQuery(Criteria criteria, @Nullable Pageable pageable) {
+		this(criteria, pageable, null);
+	}
+
+	public SimpleQuery(Criteria criteria, @Nullable Pageable pageable, @Nullable String cursor) {
 		super(criteria);
 
 		if (pageable != null && !pageable.isUnpaged()) {
@@ -80,6 +85,7 @@ public class SimpleQuery extends AbstractQuery implements Query, FilterQuery {
 			this.rows = pageable.getPageSize();
 			this.addSort(pageable.getSort());
 		}
+		this.cursor = cursor;
 	}
 
 	/**
@@ -200,6 +206,13 @@ public class SimpleQuery extends AbstractQuery implements Query, FilterQuery {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	public <T extends Query> T setCursor(String cursor) {
+		this.cursor = cursor;
+		return (T) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
 	@Deprecated
 	public final <T extends Query> T addGroupByField(Field field) {
 		Assert.notNull(field, "Field for grouping must not be null");
@@ -270,6 +283,12 @@ public class SimpleQuery extends AbstractQuery implements Query, FilterQuery {
 	@Override
 	public Integer getRows() {
 		return this.rows;
+	}
+
+	@Nullable
+	@Override
+	public String getCursor() {
+		return this.cursor;
 	}
 
 	@Override

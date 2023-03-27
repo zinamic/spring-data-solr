@@ -40,6 +40,10 @@ public class SimpleFacetQuery extends SimpleQuery implements FacetQuery {
 		super(criteria, pageable);
 	}
 
+	public SimpleFacetQuery(Criteria criteria, @Nullable Pageable pageable, @Nullable String cursor) {
+		super(criteria, pageable, cursor);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public final <T extends SolrDataQuery> T setFacetOptions(FacetOptions facetOptions) {

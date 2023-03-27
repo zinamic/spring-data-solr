@@ -30,6 +30,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.common.params.CommonParams;
+import org.apache.solr.common.params.CursorMarkParams;
 import org.apache.solr.common.params.SpatialParams;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.support.GenericConversionService;
@@ -428,13 +429,16 @@ public abstract class QueryParserBase<QUERYTPYE extends SolrDataQuery> implement
 	 * @param offset
 	 * @param rows
 	 */
-	protected void appendPagination(SolrQuery query, @Nullable Long offset, @Nullable Integer rows) {
+	protected void appendPagination(SolrQuery query, @Nullable Long offset, @Nullable Integer rows, @Nullable String cursor) {
 
-		if (offset != null && offset.intValue() >= 0) {
-			query.setStart(offset.intValue());
-		}
 		if (rows != null && rows >= 0) {
 			query.setRows(rows);
+		}
+		if (cursor != null) {
+			query.set(CursorMarkParams.CURSOR_MARK_PARAM, cursor);
+			query.setStart(0);
+		} else if (offset != null && offset.intValue() >= 0) {
+			query.setStart(offset.intValue());
 		}
 	}
 
