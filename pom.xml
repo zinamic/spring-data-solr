@@ -15,15 +15,13 @@
 		<java.version>17</java.version>
 		<maven.compiler.source>17</maven.compiler.source>
    		<maven.compiler.target>17</maven.compiler.target>		
-		<commons.collections>3.2.1</commons.collections>
-		<commons.lang>3.1</commons.lang>
-		<httpcomponents>4.3.1</httpcomponents>
-		<solr>8.5.2</solr>
+		<commons.lang>3.13.0</commons.lang>
+		<solr>9.4.0</solr>
 		<cdi>4.0.1</cdi>
-		<jackson>2.14.0</jackson>
-		<commons-io>2.5</commons-io>
-		<spring.version>6.0.0</spring.version>
-		<spring-data.version>3.0.0</spring-data.version>
+		<jackson>2.15.3</jackson>
+		<commons-io>2.15.0</commons-io>
+		<spring.version>6.0.13</spring.version>
+		<spring-data.version>3.1.5</spring-data.version>
 		<java-module-name>spring.data.solr</java-module-name>
 	</properties>
 
