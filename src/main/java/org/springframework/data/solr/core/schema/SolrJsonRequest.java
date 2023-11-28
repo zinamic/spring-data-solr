@@ -104,9 +104,9 @@ public class SolrJsonRequest extends SolrRequest<SolrJsonResponse> {
 		return new SolrJsonResponse();
 	}
 
-	@Override
-	public String getRequestType() {
-		return SolrRequestType.UNSPECIFIED.toString();
-	}
+	// @Override
+	// public String getRequestType() {
+	// 	return SolrRequestType.UNSPECIFIED.toString();
+	// }
 
 }

@@ -16,7 +16,7 @@
 		<maven.compiler.source>17</maven.compiler.source>
    		<maven.compiler.target>17</maven.compiler.target>		
 		<commons.lang>3.13.0</commons.lang>
-		<solr>9.4.0</solr>
+		<solr>8.11.2</solr>
 		<cdi>4.0.1</cdi>
 		<jackson>2.15.3</jackson>
 		<commons-io>2.15.0</commons-io>
