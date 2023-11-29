@@ -20,8 +20,8 @@
 		<cdi>4.0.1</cdi>
 		<jackson>2.15.3</jackson>
 		<commons-io>2.15.0</commons-io>
-    	<spring.version>6.0.0</spring.version>
-		<spring-data.version>3.0.0</spring-data.version>
+		<spring.version>6.0.13</spring.version>
+		<spring-data.version>3.1.5</spring-data.version>
 		<java-module-name>spring.data.solr</java-module-name>
 	</properties>
 
