@@ -17,13 +17,13 @@
    		<maven.compiler.target>17</maven.compiler.target>		
 		<commons.collections>3.2.1</commons.collections>
 		<commons.lang>3.1</commons.lang>
+		<!-- <commons-io>2.5</commons-io> -->
 		<httpcomponents>4.3.1</httpcomponents>
 		<solr>8.11.1</solr>
 		<cdi>4.0.1</cdi>
 		<jackson>2.14.0</jackson>
-		<commons-io>2.5</commons-io>
-		<spring.version>6.0.0</spring.version>
-		<spring-data.version>3.0.0</spring-data.version>
+		<spring.version>6.0.13</spring.version>
+		<spring-data.version>3.1.5</spring-data.version>
 		<java-module-name>spring.data.solr</java-module-name>
 	</properties>
 
@@ -39,16 +39,6 @@
 	        <url>https://artifactory.zinamic.tools/artifactory/libs-snapshot-local</url>
 	    </snapshotRepository>
 	</distributionManagement>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>commons-io</groupId>
-				<artifactId>commons-io</artifactId>
-				<version>${commons-io}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<dependencies>
 		<!-- SPRING -->
