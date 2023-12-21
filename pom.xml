@@ -14,7 +14,8 @@
 	<properties>
 		<java.version>17</java.version>
 		<maven.compiler.source>17</maven.compiler.source>
-   		<maven.compiler.target>17</maven.compiler.target>		
+   		<maven.compiler.target>17</maven.compiler.target>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<commons.lang>3.1</commons.lang>
 		<solr>8.11.1</solr>
 		<cdi>4.0.1</cdi>
