@@ -29,6 +29,8 @@ import org.springframework.data.solr.core.convert.MappingSolrConverter;
 import org.springframework.data.solr.core.convert.SolrConverter;
 import org.springframework.data.solr.core.convert.SolrCustomConversions;
 import org.springframework.data.solr.core.mapping.SimpleSolrMappingContext;
+import org.springframework.data.solr.core.mapping.SimpleSolrPersistentEntity;
+import org.springframework.data.solr.core.mapping.SolrPersistentProperty;
 import org.springframework.data.solr.core.schema.SolrPersistentEntitySchemaCreator;
 import org.springframework.data.solr.core.schema.SolrPersistentEntitySchemaCreator.Feature;
 import org.springframework.data.solr.server.SolrClientFactory;
@@ -70,7 +72,7 @@ public abstract class AbstractSolrConfiguration {
 	 *         default.
 	 */
 	@Bean
-	protected MappingContext solrMappingContext() {
+	protected MappingContext<SimpleSolrPersistentEntity<?>, SolrPersistentProperty> solrMappingContext() {
 
 		return new SimpleSolrMappingContext(
 				new SolrPersistentEntitySchemaCreator(solrClientFactory()).enable(schemaSupport()));
