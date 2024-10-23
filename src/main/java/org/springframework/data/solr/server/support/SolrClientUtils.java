@@ -18,8 +18,13 @@ package org.springframework.data.solr.server.support;
 import java.io.Closeable;
 import java.lang.reflect.Method;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.dao.DataAccessResourceFailureException;
+import org.springframework.data.solr.core.mapping.SolrDocument;
 import org.springframework.util.Assert;
 import org.springframework.util.ReflectionUtils;
 
@@ -31,7 +36,25 @@ import org.springframework.util.ReflectionUtils;
  */
 public class SolrClientUtils {
 
+	private static final Logger logger = LoggerFactory.getLogger(SolrClientUtils.class);
+	private static final String SLASH = "/";
+
 	private SolrClientUtils() {}
+
+	/**
+	 * Resolve solr core/collection name for given type.
+	 *
+	 * @param type
+	 * @return empty string if {@link SolrDocument} not present or {@link SolrDocument#solrCoreName()} is blank.
+	 * @since 1.1
+	 */
+	public static String resolveSolrCoreName(Class<?> type) {
+		SolrDocument annotation = AnnotationUtils.findAnnotation(type, SolrDocument.class);
+		if (annotation != null && StringUtils.isNotBlank(annotation.solrCoreName())) {
+			return annotation.solrCoreName();
+		}
+		return "";
+	}
 
 	/**
 	 * Close the {@link SolrClient} by calling {@link SolrClient#close()} or {@code shutdown} for the generation 5
