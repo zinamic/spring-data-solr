@@ -15,13 +15,14 @@
  */
 package org.springframework.data.solr.server.support;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.impl.CloudHttp2SolrClient;
 import org.apache.solr.client.solrj.impl.Http2SolrClient;
-import org.apache.solr.client.solrj.impl.LBHttp2SolrClient;
-import org.apache.solr.client.solrj.impl.LBSolrClient;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -49,30 +50,60 @@ public class HttpSolrClientFactoryBean extends HttpSolrClientFactory
 	}
 
 	private void initSolrClient() {
-		if (this.url.contains(SERVER_URL_SEPARATOR)) {
-			createLoadBalancedHttpSolrClient();
-		} else {
-			createHttpSolrClient();
-		}
+		
+		createCloudSolrClient();
+		
+//		if (this.url.contains(SERVER_URL_SEPARATOR)) {
+//			createLoadBalancedHttpSolrClient();
+//		} else {
+//			createHttpSolrClient();
+//		}
+		
 	}
 
-	private void createHttpSolrClient() {
+//	private void createHttpSolrClient() {
+//
+//		Http2SolrClient.Builder builder = new Http2SolrClient.Builder(this.url);
+//
+//		if (timeout != null) {
+//			builder = builder.withConnectionTimeout(timeout, TimeUnit.MILLISECONDS);
+//		}
+//
+//		if (maxConnections != null) {
+//			builder.withMaxConnectionsPerHost(maxConnections);
+//		}
+//
+//		this.setSolrClient(builder.build());
+//	}
 
-		Http2SolrClient.Builder builder = new Http2SolrClient.Builder(this.url);
+//	private void createLoadBalancedHttpSolrClient() {
+//
+//		Http2SolrClient.Builder httpbuilder = new Http2SolrClient.Builder();
+//
+//		if (timeout != null) {
+//			httpbuilder = httpbuilder.withConnectionTimeout(timeout, TimeUnit.MILLISECONDS);
+//		}
+//
+//		if (maxConnections != null) {
+//			httpbuilder.withMaxConnectionsPerHost(maxConnections);
+//		}
+//	    
+//		Http2SolrClient httpclient = httpbuilder.build();
+//
+//		
+//		String[] urls = StringUtils.split(this.url, SERVER_URL_SEPARATOR);
+//		LBSolrClient.Endpoint[] endpoints = new LBSolrClient.Endpoint[urls.length];
+//		for (int i=0; i<urls.length; i++) {
+//			endpoints[i] = new LBSolrClient.Endpoint(urls[i]);
+//		}
+//		
+//		LBHttp2SolrClient.Builder solrbuilder = new LBHttp2SolrClient.Builder(httpclient, endpoints);
+//
+//		this.setSolrClient(solrbuilder.build());
+//	}
 
-		if (timeout != null) {
-			builder = builder.withConnectionTimeout(timeout, TimeUnit.MILLISECONDS);
-		}
-
-		if (maxConnections != null) {
-			builder.withMaxConnectionsPerHost(maxConnections);
-		}
-
-		this.setSolrClient(builder.build());
-	}
-
-	private void createLoadBalancedHttpSolrClient() {
-
+	private void createCloudSolrClient() {
+		
 		Http2SolrClient.Builder httpbuilder = new Http2SolrClient.Builder();
 
 		if (timeout != null) {
@@ -82,19 +113,16 @@ public class HttpSolrClientFactoryBean extends HttpSolrClientFactory
 		if (maxConnections != null) {
 			httpbuilder.withMaxConnectionsPerHost(maxConnections);
 		}
-	    
-		Http2SolrClient httpclient = httpbuilder.build();
-
 		
-		String[] urls = StringUtils.split(this.url, SERVER_URL_SEPARATOR);
-		LBSolrClient.Endpoint[] endpoints = new LBSolrClient.Endpoint[urls.length];
-		for (int i=0; i<urls.length; i++) {
-			endpoints[i] = new LBSolrClient.Endpoint(urls[i]);
+		List<String> solrUrls = new ArrayList<>();
+		for (String url : StringUtils.split(this.url, SERVER_URL_SEPARATOR)) {
+			solrUrls.add(url);
 		}
-		
-		LBHttp2SolrClient.Builder solrbuilder = new LBHttp2SolrClient.Builder(httpclient, endpoints);
 
-		this.setSolrClient(solrbuilder.build());
+		CloudHttp2SolrClient.Builder builder = new CloudHttp2SolrClient.Builder(solrUrls);
+		builder.withInternalClientBuilder(httpbuilder);
+
+		this.setSolrClient(builder.build());
 	}
 
 	@Override
