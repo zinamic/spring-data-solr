@@ -16,19 +16,14 @@
 package org.springframework.data.solr.server.support;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.HttpClient;
 import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
-import org.springframework.beans.DirectFieldAccessor;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
  * The {@link HttpSolrClientFactory} replaces HttpSolrServerFactory from version 1.x and configures an
- * {@link HttpSolrClient} to work with the provided core. If provided Credentials eg. (@link
+ * HttpSolrClient to work with the provided core. If provided Credentials eg. (@link
  * UsernamePasswordCredentials} and AuthPolicy (eg. BASIC, DIGEST,...) will be applied to the underlying HttpClient.
  *
  * @author Christoph Strobl
@@ -63,25 +58,9 @@ public class HttpSolrClientFactory extends SolrClientFactoryBase {
 
 	private void appendAuthentication(Credentials credentials, String authPolicy, SolrClient solrClient) {
 
-		if (isHttpSolrClient(solrClient)) {
-
-			HttpSolrClient httpSolrClient = (HttpSolrClient) solrClient;
-
-			if (credentials != null && StringUtils.isNotBlank(authPolicy)
-					&& assertHttpClientInstance(httpSolrClient.getHttpClient())) {
-
-				HttpClient httpClient = httpSolrClient.getHttpClient();
-
-				DirectFieldAccessor df = new DirectFieldAccessor(httpClient);
-				CredentialsProvider provider = (CredentialsProvider) df.getPropertyValue("credentialsProvider");
-
-				provider.setCredentials(new AuthScope(AuthScope.ANY), credentials);
-			}
+		if (credentials != null && StringUtils.isNotBlank(authPolicy)) {
+			throw new UnsupportedOperationException("authentication currently not supported");
 		}
-	}
-
-	private boolean assertHttpClientInstance(HttpClient httpClient) {
-		return httpClient.getClass().getName().contains("InternalHttpClient");
 	}
 
 }
