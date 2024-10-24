@@ -15,7 +15,7 @@
  */
 package org.springframework.data.solr.repository.support;
 
-import static org.springframework.data.querydsl.QuerydslUtils.QUERY_DSL_PRESENT;
+import static org.springframework.data.querydsl.QuerydslUtils.*;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -114,7 +114,7 @@ public class SolrRepositoryFactory extends RepositoryFactorySupport {
 	}
 
 	@Override
-	@SuppressWarnings({ "rawtypes" })
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected Object getTargetRepository(RepositoryInformation metadata) {
 
 		SolrOperations operations = this.solrOperations;

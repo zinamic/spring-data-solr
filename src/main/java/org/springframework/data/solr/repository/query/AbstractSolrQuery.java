@@ -525,7 +525,7 @@ public abstract class AbstractSolrQuery implements RepositoryQuery {
 
 				if (limit > 0) {
 					if (pageToUse.getOffset() > limit) {
-						return new PageImpl<Object>(java.util.Collections.emptyList(), pageToUse, limit);
+						return new PageImpl(java.util.Collections.emptyList(), pageToUse, limit);
 					}
 					if (pageToUse.getOffset() + pageToUse.getPageSize() > limit) {
 						pageToUse = getLimitingPageable(pageToUse, limit - (int) pageToUse.getOffset());

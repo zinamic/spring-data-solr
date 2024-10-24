@@ -104,11 +104,4 @@ public class SolrJsonRequest extends SolrRequest<SolrJsonResponse> {
 		return new SolrJsonResponse();
 	}
 
-    // TODO Hardcode this for now, but in reality we'll want to parse this out of the Operation data
-    // somehow
-    @Override
-    public String getRequestType() {
-      return SolrRequestType.ADMIN.toString();
-    }
-
 }

@@ -17,7 +17,7 @@
    		<maven.compiler.target>21</maven.compiler.target>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<commons.lang>3.17.0</commons.lang>
-		<solr>9.7.0</solr>
+		<solr>8.11.1</solr>
 		<cdi>4.1.0</cdi>
 		<jackson>2.17.2</jackson>
 		<spring.version>6.1.13</spring.version>

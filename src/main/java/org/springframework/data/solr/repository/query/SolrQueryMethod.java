@@ -40,6 +40,7 @@ import org.springframework.data.solr.repository.Query;
 import org.springframework.data.solr.repository.SelectiveStats;
 import org.springframework.data.solr.repository.Spellcheck;
 import org.springframework.data.solr.repository.Stats;
+import org.springframework.data.util.ClassTypeInformation;
 import org.springframework.data.util.TypeInformation;
 import org.springframework.lang.Nullable;
 import org.springframework.util.ClassUtils;
@@ -102,7 +103,7 @@ public class SolrQueryMethod extends QueryMethod {
 	}
 
 	TypeInformation<?> getReturnType() {
-		return TypeInformation.fromReturnTypeOf(method);
+		return ClassTypeInformation.fromReturnTypeOf(method);
 	}
 
 	/**
@@ -566,6 +567,7 @@ public class SolrQueryMethod extends QueryMethod {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<String> getAnnotationValuesAsStringList(@Nullable Annotation annotation, String attribute) {
 
 		if (annotation == null) {
@@ -588,7 +590,7 @@ public class SolrQueryMethod extends QueryMethod {
 
 		T[] values = (T[]) AnnotationUtils.getValue(annotation, attribute);
 
-		return (List<T>) Arrays.asList(ObjectUtils.toObjectArray(values));
+		return (List) Arrays.asList(ObjectUtils.toObjectArray(values));
 	}
 
 	@Override
