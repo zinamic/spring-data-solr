@@ -15,6 +15,7 @@
  */
 package org.springframework.data.solr.core;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,7 +32,9 @@ import java.util.stream.Collectors;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrRequest;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.request.SolrPing;
+import org.apache.solr.client.solrj.request.UpdateRequest;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.SolrPingResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
@@ -267,6 +270,20 @@ public class SolrTemplate implements SolrOperations, InitializingBean, Applicati
 		return execute(solrClient -> solrClient.deleteById(collection, id));
 	}
 
+	public UpdateResponse deleteByIds(String collection, String id, String route) {
+
+		Assert.notNull(id, "Cannot delete 'null' id");
+
+		return execute(solrClient -> deleteById(solrClient, collection, id, route));
+	}
+
+	private UpdateResponse deleteById(SolrClient solrClient, String collection, String id, String route) throws SolrServerException, IOException {
+		UpdateRequest req = new UpdateRequest();
+		req.deleteById(id, route);
+		req.setCommitWithin(-1);
+		return req.process(solrClient, collection);
+	}
+
 	@Override
 	public UpdateResponse deleteByIds(String collection, Collection<String> ids) {
 
@@ -274,6 +291,24 @@ public class SolrTemplate implements SolrOperations, InitializingBean, Applicati
 
 		return execute(solrClient -> solrClient.deleteById(collection, ids.stream().collect(Collectors.toList())));
 	}
+
+	public UpdateResponse deleteByIds(String collection, Collection<String> ids, String route) {
+
+		Assert.notNull(ids, "Cannot delete 'null' collection");
+
+		return execute(solrClient -> deleteById(solrClient, collection, ids.stream().collect(Collectors.toList()), route));
+	}
+
+	private UpdateResponse deleteById(SolrClient solrClient, String collection, List<String> ids, String route) throws SolrServerException, IOException {
+		if (ids == null) throw new IllegalArgumentException("'ids' parameter must be non-null");
+		if (ids.isEmpty()) throw new IllegalArgumentException("'ids' parameter must not be empty; should contain IDs to delete");
+	
+		UpdateRequest req = new UpdateRequest();
+		req.deleteById(ids);
+		req.withRoute(route);
+		req.setCommitWithin(-1);
+		return req.process(solrClient, collection);
+	  }
 
 	@Override
 	public <T> Optional<T> queryForObject(String collection, Query query, Class<T> clazz) {
