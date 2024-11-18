@@ -16,7 +16,7 @@
 package org.springframework.data.solr.server.support;
 
 import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.impl.Http2SolrClient;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.data.solr.server.SolrClientFactory;
 import org.springframework.lang.Nullable;
@@ -40,8 +40,8 @@ abstract class SolrClientFactoryBase implements SolrClientFactory, DisposableBea
 		this.solrClient = solrClient;
 	}
 
-	protected final boolean isHttpSolrClient(SolrClient solrClient) {
-		return (solrClient instanceof HttpSolrClient);
+	protected final boolean isHttp2SolrClient(SolrClient solrClient) {
+		return (solrClient instanceof Http2SolrClient);
 	}
 
 	@Override
