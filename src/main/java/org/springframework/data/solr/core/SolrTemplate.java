@@ -20,6 +20,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -121,6 +122,8 @@ public class SolrTemplate implements SolrOperations, InitializingBean, Applicati
 
 	private Set<Feature> schemaCreationFeatures = Collections.emptySet();
 
+	private Map<String,String> solrQueryParams = new HashMap<>();   // custom query parameters to be added to every query
+	
 	@SuppressWarnings("serial") //
 	private static final List<String> ITERABLE_CLASSES = new ArrayList<String>() {
 		{
@@ -148,6 +151,12 @@ public class SolrTemplate implements SolrOperations, InitializingBean, Applicati
 
 	public SolrTemplate(SolrClientFactory solrClientFactory, @Nullable SolrConverter solrConverter) {
 		this(solrClientFactory, solrConverter, RequestMethod.GET);
+	}
+	
+	public void addSolrQueryParam(String param, String value) {
+		Assert.hasText(param, "Param must not be empty");
+		Assert.hasText(value, "Value must not be empty");
+		solrQueryParams.put(param, value);
 	}
 
 	/**
@@ -543,6 +552,11 @@ public class SolrTemplate implements SolrOperations, InitializingBean, Applicati
 
 		SolrQuery solrQuery = constructQuery(query, clazz);
 
+		// add custom solr query parameters
+		for (Entry<String,String> entry : this.solrQueryParams.entrySet()) {
+			solrQuery.setParam(entry.getKey(), entry.getValue());
+		}
+		
 		if (clazz != null) {
 			SolrPersistentEntity<?> persistedEntity = mappingContext.getRequiredPersistentEntity(clazz);
 			if (persistedEntity.hasScoreProperty()) {
